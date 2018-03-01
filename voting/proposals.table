@@ -1,0 +1,17 @@
+{
+	'name': 'PROPOSALS',
+	'type': 'TABLE',
+	'columns': [{
+		'name': 'PROPOSAL_ID',
+		'type': 'INTEGER',
+		'primaryKey': 'true'
+	}, {
+		'name': 'PROPOSAL_NAME',
+		'type': 'VARCHAR',
+		'length': 50
+	}, {
+		'name': 'PROPOSAL_IMAGE',
+		'type': 'BLOB',
+		'nullable': 'true'
+	}]
+}

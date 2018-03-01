@@ -1,0 +1,23 @@
+{
+	'name': 'VOTES',
+	'type': 'TABLE',
+	'columns': [{
+		'name': 'VOTE_PROPOSAL_ID',
+		'type': 'INTEGER'
+	}, {
+		'name': 'VOTE_USER_ID',
+		'type': 'VARCHAR',
+		'length': 50
+	}],
+	'constraints': {
+		'primaryKey': {
+			'columns': ['VOTE_PROPOSAL_ID', 'VOTE_USER_ID']
+		},
+		'foreignKeys':[{
+			'name': 'FK_PROPOSAL_ID',
+			'columns': ['VOTE_PROPOSAL_ID'],
+			'referencedTable': 'PROPOSALS',
+			'referencedColumns': ['PROPOSAL_ID']
+		}]
+	}
+}
