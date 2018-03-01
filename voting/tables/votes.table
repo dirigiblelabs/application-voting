@@ -19,5 +19,9 @@
 			'referencedTable': 'PROPOSALS',
 			'referencedColumns': ['PROPOSAL_ID']
 		}]
-	}
+	},
+	'dependencies': [{
+    	'name':'VOTES',
+    	'type':'TABLE'
+	}]
 }

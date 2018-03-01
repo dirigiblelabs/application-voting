@@ -4,7 +4,8 @@
 	'columns': [{
 		'name': 'PROPOSAL_ID',
 		'type': 'INTEGER',
-		'primaryKey': 'true'
+		'primaryKey': 'true',
+		'identity': 'true'
 	}, {
 		'name': 'PROPOSAL_NAME',
 		'type': 'VARCHAR',
