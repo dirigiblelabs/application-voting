@@ -18,10 +18,13 @@
 			'columns': ['VOTE_PROPOSAL_ID'],
 			'referencedTable': 'PROPOSALS',
 			'referencedColumns': ['PROPOSAL_ID']
+		}],
+		'uniqueIndices':[{
+			'columns': ['VOTE_USER_ID']
+		}],
+		'dependencies': [{
+			'name':'VOTES',
+			'type':'TABLE'
 		}]
-	},
-	'dependencies': [{
-		'name':'VOTES',
-		'type':'TABLE'
-	}]
+	}
 }
