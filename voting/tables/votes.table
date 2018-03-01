@@ -21,10 +21,10 @@
 		}],
 		'uniqueIndices':[{
 			'columns': ['VOTE_USER_ID']
-		}],
-		'dependencies': [{
-			'name':'VOTES',
-			'type':'TABLE'
 		}]
-	}
+	},
+	'dependencies': [{
+		'name':'PROPOSALS',
+		'type':'TABLE'
+	}]
 }
