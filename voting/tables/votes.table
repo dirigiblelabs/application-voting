@@ -21,7 +21,7 @@
 		}]
 	},
 	'dependencies': [{
-    	'name':'VOTES',
-    	'type':'TABLE'
+		'name':'VOTES',
+		'type':'TABLE'
 	}]
 }
