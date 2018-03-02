@@ -16,7 +16,7 @@
 </head>
 <body ng-controller="PageController">
 	<nav class="navbar sticky-top navbar-expand-lg navbar-dark primary-color">
-		<a class="navbar-brand text-center" href="#">InnoWeek 2018</a>
+		<a class="navbar-brand text-center" href="#">{{contest}}</a>
 	</nav>
 
 	<div class="modal fade" id="confirmVoteModal" tabindex="-1" role="dialog" aria-labelledby="confirmVoteModalLabel" aria-hidden="true">
@@ -63,10 +63,16 @@
 		angular.module('page', []);
 		angular.module('page').controller('PageController', function ($scope, $http) {
 
+			var contestApi = '../../../../js/voting/api/contest.js';
 			var proposalsApi = '../../../../js/voting/api/proposals.js';
 			var voteApi = '../../../../js/voting/api/vote.js';
 
 			$scope.alreadyVotedMessage = 'You\'ve already voted!';
+
+			$http.get(contestApi)
+			.success(function(data) {
+				$scope.contest = data.name;
+			});
 
 			$http.get(voteApi)
 			.success(function(data) {

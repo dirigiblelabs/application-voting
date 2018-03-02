@@ -16,7 +16,7 @@
 </head>
 <body ng-controller="PageController">
 	<nav class="navbar sticky-top navbar-expand-lg navbar-dark primary-color">
-		<a class="navbar-brand text-center" href="#">InnoWeek 2018 Results</a>
+		<a class="navbar-brand text-center" href="#">{{contests}} Results</a>
 	</nav>
 
 	<div class="jumbotron list-group list-group-flush text-center" style="margin-left: 20%; margin-right: 20%;">
@@ -43,14 +43,18 @@
 		angular.module('page', []);
 		angular.module('page').controller('PageController', function ($scope, $http) {
 
+			var contestApi = '../../../../../js/voting/api/admin/contest.js';
 			var resultsApi = '../../../../../js/voting/api/admin/results.js';
+
+			$http.get(contestApi)
+			.success(function(data) {
+				$scope.contests = data.name;
+			});
 
 			$http.get(resultsApi)
 			.success(function(data) {
 				$scope.results = data;
 			});
-
-
   	  });
     </script>
 </body>
