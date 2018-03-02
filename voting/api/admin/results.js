@@ -1,7 +1,7 @@
 var rs = require('http/v3/rs');
 var query = require('db/v3/query');
 
-var getProposalsSql = 'select PROPOSAL_NAME from PROPOSALS';
+var getProposalsSql = 'select PROPOSAL_NAME, PROPOSAL_IMAGE from PROPOSALS';
 
 var getResultsSql = 'select PROPOSAL_NAME, count(*) as VOTES from PROPOSALS'
 	+ ' join VOTES on VOTE_PROPOSAL_ID = PROPOSAL_ID'

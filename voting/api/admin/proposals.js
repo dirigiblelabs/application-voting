@@ -4,7 +4,8 @@ var update = require('db/v3/update');
 var sequence = require('db/v3/sequence');
 
 var getProposalsSql = 'select * from PROPOSALS';
-var addPrpopsalSql = 'insert into PROPOSALS (PROPOSAL_ID, PROPOSAL_NAME, PROPOSAL_IMAGE) values (?, ?, ?)';
+var createPrpopsalSql = 'insert into PROPOSALS (PROPOSAL_ID, PROPOSAL_NAME, PROPOSAL_IMAGE) values (?, ?, ?)';
+var deleteProposalSql = 'delete from PROPOSALS where PROPOSAL_ID = ?';
 var proposalsSequence = 'PROPOSALS_SEQUENCE';
 
 rs.service()
@@ -18,12 +19,25 @@ rs.service()
 			let id = sequence.nextval(proposalsSequence);
 			let name = proposal.name;
 			let image = proposal.image;
-			let updated = update.execute(addPrpopsalSql, [id, name, image]);
+			let updated = update.execute(createPrpopsalSql, [id, name, image]);
 			let isSuccessful = updated !== null;
-			let vote = {
+			let status = {
 				'code': isSuccessful ? 200 : 400,
 				'message': isSuccessful ? 'successfully added' : 'failed to add'
 			};
-			response.println(JSON.stringify(vote));
+			response.println(JSON.stringify(status));
+			response.setStatus(status.code);
+		})
+	.resource('{id}')
+		.delete(function(ctx, request, response) {
+			let proposalId = ctx.pathParameters.id;
+			let updated = update.execute(deleteProposalSql, [proposalId]);
+			let isSuccessful = updated !== null;
+			let status = {
+				'code': isSuccessful ? 200 : 400,
+				'message': isSuccessful ? 'successfully removed' : 'failed to remove'
+			};
+			response.println(JSON.stringify(status));
+			response.setStatus(status.code);
 		})
 .execute();

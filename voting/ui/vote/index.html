@@ -42,8 +42,8 @@
 	<div ng-show="votingEnabled" class="jumbotron list-group list-group-flush text-center" style="padding: 0;">
 		<a ng-repeat="next in proposals" href="#" class="list-group-item list-group-item-action flex-column align-items-start" data-toggle="modal" data-target="#confirmVoteModal" ng-click="confirmVote(next)">
 			<div class="row">
-				<img src="{{next.PROPOSAL_IMAGE}}">
-				<h1 class="col-md-9 mb-1">{{next.PROPOSAL_NAME}}</h1>
+				<img class="mx-auto d-block" src="{{next.PROPOSAL_IMAGE}}">
+				<h1 class="mx-auto d-block align-self-center">{{next.PROPOSAL_NAME}}</h1>
 			</div>
   		</a>
   	</div>

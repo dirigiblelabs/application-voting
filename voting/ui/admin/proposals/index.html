@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="page">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!-- Bootstrap core CSS -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Material Design Bootstrap -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css" rel="stylesheet">
+</head>
+<body ng-controller="PageController">
+	<nav class="navbar sticky-top navbar-expand-lg navbar-dark primary-color">
+		<a class="navbar-brand text-center" href="#">InnoWeek 2018 Proposals</a>
+	</nav>
+
+	<div class="jumbotron list-group list-group-flush text-center" style="margin-left: 20%; margin-right: 20%;">
+		<a ng-repeat="next in proposals" href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+			<div class="d-flex w-100 justify-content-between">
+				<h5 class="mb-1">{{$index + 1}}.</h5>
+				<button type="button" class="btn btn-sm btn-danger waves-effect waves-light" ng-click="deleteProposal(next.PROPOSAL_ID)"><i class="fa fa-times-circle-o"></i></button>
+			</div>
+			<div class="row">
+				<img class="mx-auto d-block" src="{{next.PROPOSAL_IMAGE}}">
+				<h1 class="mx-auto d-block align-self-center">{{next.PROPOSAL_NAME}}</h1>
+			</div>
+  		</a>
+  		<div class="d-flex w-100 justify-content-between">
+  			<h5 class="mb-1"></h5>
+  			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalProposalForm">New Proposal</button>
+		</div>
+  	</div>
+
+
+	<div class="modal fade" id="modalProposalForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog cascading-modal" role="document">
+			<div class="modal-content">
+				<div class="modal-header primary-color white-text">
+					<h4 class="title">Proposal</h4>
+					<button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            	</div>
+            	<div class="modal-body">
+            		<div class="md-form form-sm">
+            			<i class="fa fa-user prefix"></i>
+            			<input type="text" class="form-control form-control-sm" ng-model="newProposal.name">
+            			<label>Name</label>
+                	</div>
+
+	                <div class="md-form form-sm">
+	                    <i class="fa fa-image prefix"></i>
+	                    <input type="text"class="form-control form-control-sm" ng-model="newProposal.image">
+	                    <label>Image</label>
+	                </div>
+	
+	                <div class="text-center mt-4 mb-2">
+	                    <button class="btn btn-primary" ng-click="addProposal()">Add</button>
+	                </div>
+               	</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js"></script>
+	<script type="text/javascript" src="/services/v3/web/resources/angular/1.4.7/angular.min.js"></script>
+    <script type="text/javascript" src="/services/v3/web/resources/angular/1.4.7/angular-resource.min.js"></script>
+
+	<script type="text/javascript">
+		angular.module('page', []);
+		angular.module('page').controller('PageController', function ($scope, $http) {
+
+			var proposalsApi = '../../../../../js/voting/api/admin/proposals.js';
+
+			$scope.newProposal = {};
+
+			getProposals();
+
+			$scope.addProposal = function() {
+				var proposal = {
+					'name': $scope.newProposal.name,
+					'image': $scope.newProposal.image
+				};
+				$http.post(proposalsApi, proposal)
+				.success(function(data) {
+					alert(JSON.stringify(data));
+					$scope.newProposal = {};
+					getProposals();
+				}).error(function(data) {
+					alert(JSON.stringify(data));
+				});
+			};
+
+			$scope.deleteProposal = function(proposalId) {
+				$http.delete(proposalsApi + '/' + proposalId)
+				.success(function(data) {
+					getProposals();
+				})
+			};
+
+			function getProposals() {
+				$http.get(proposalsApi)
+				.success(function(data) {
+					$scope.proposals = data;
+				});
+			}
+
+
+//			$http.get(voteApi)
+//			.success(function(data) {
+//				$scope.votingEnabled = true;
+//			}).error(function(data) {
+//				$scope.votingEnabled = false;
+//			});
+//
+//			$http.get(proposalsApi)
+//			.success(function(data) {
+//				$scope.proposals = data;
+//			});
+//
+//			$scope.confirmVote = function(proposal) {
+//				$scope.selectedProposal = proposal;
+//			};
+//
+//			$scope.vote = function() {
+//				var vote = {
+//					'proposalId': $scope.selectedProposal.PROPOSAL_ID
+//				};
+//				$http.post(voteApi, vote)
+//				.success(function(data) {
+//					$('#confirmVoteModal').modal('toggle');
+//					$scope.alreadyVotedMessage = 'You\'ve voted successfully for ' + $scope.selectedProposal.PROPOSAL_NAME + '!';
+//					$scope.votingEnabled = false;
+//				});
+//			};
+  	  });
+    </script>
+</body>
+</html>
