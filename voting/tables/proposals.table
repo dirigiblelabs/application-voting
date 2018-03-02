@@ -10,7 +10,8 @@
 		'length': 50
 	}, {
 		'name': 'PROPOSAL_IMAGE',
-		'type': 'BLOB',
+		'type': 'VARCHAR',
+		'length': 256,
 		'nullable': 'true'
 	}],
 	'constraints': {

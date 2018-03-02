@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="page">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!-- Bootstrap core CSS -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Material Design Bootstrap -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css" rel="stylesheet">
+</head>
+<body ng-controller="PageController">
+	<nav class="navbar sticky-top navbar-expand-lg navbar-dark primary-color">
+		<a class="navbar-brand text-center" href="#">InnoWeek 2018</a>
+	</nav>
+
+	<div class="modal fade" id="confirmVoteModal" tabindex="-1" role="dialog" aria-labelledby="confirmVoteModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+				<h5 class="modal-title" id="confirmVoteModalLabel">Confirm</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					Do you really want to vote for <b>{{selectedProposal.PROPOSAL_NAME}}</b>?
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+					<button id="confirmVoteButton" type="button" class="btn btn-primary" ng-click="vote()">Yes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div ng-show="votingEnabled" class="jumbotron list-group list-group-flush text-center" style="padding: 0;">
+		<a ng-repeat="next in proposals" href="#" class="list-group-item list-group-item-action flex-column align-items-start" data-toggle="modal" data-target="#confirmVoteModal" ng-click="confirmVote(next)">
+			<div class="row">
+				<img src="{{next.PROPOSAL_IMAGE}}">
+				<h1 class="col-md-9 mb-1">{{next.PROPOSAL_NAME}}</h1>
+			</div>
+  		</a>
+  	</div>
+
+	<div ng-hide="votingEnabled">
+		<h1>{{alreadyVotedMessage}}</h1>
+	</div>
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js"></script>
+	<script type="text/javascript" src="/services/v3/web/resources/angular/1.4.7/angular.min.js"></script>
+    <script type="text/javascript" src="/services/v3/web/resources/angular/1.4.7/angular-resource.min.js"></script>
+
+	<script type="text/javascript">
+		angular.module('page', []);
+		angular.module('page').controller('PageController', function ($scope, $http) {
+
+			var proposalsApi = '../../../../js/voting/api/proposals.js';
+			var voteApi = '../../../../js/voting/api/vote.js';
+
+			$scope.alreadyVotedMessage = 'You\'ve already voted!';
+
+			$http.get(voteApi)
+			.success(function(data) {
+				$scope.votingEnabled = true;
+			}).error(function(data) {
+				$scope.votingEnabled = false;
+			});
+
+			$http.get(proposalsApi)
+			.success(function(data) {
+				$scope.proposals = data;
+			});
+
+			$scope.confirmVote = function(proposal) {
+				$scope.selectedProposal = proposal;
+			};
+
+			$scope.vote = function() {
+				var vote = {
+					'proposalId': $scope.selectedProposal.PROPOSAL_ID
+				};
+				$http.post(voteApi, vote)
+				.success(function(data) {
+					$('#confirmVoteModal').modal('toggle');
+					$scope.alreadyVotedMessage = 'You\'ve voted successfully for ' + $scope.selectedProposal.PROPOSAL_NAME + '!';
+					$scope.votingEnabled = false;
+				});
+			};
+
+  	  });
+    </script>
+</body>
+</html>

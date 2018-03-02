@@ -11,18 +11,24 @@ rs.service()
 	.resource('')
 		.get(function(ctx, request, response) {
 			let result = query.execute(checkVoteSql, [user.getName()]);
+			let isVoted = result.length !== 0;
 			let vote = {
-				'status': result.length === 0 ? 'not voted' : 'already voted'
-			}
+				'status': !isVoted ? 200 : 400,
+				'message': !isVoted ? 'not voted': 'already voted'
+			};
 			response.println(JSON.stringify(vote));
+			response.setStatus(vote.status);
 		})
 		.post(function(ctx, request, response) {
 			let proposalId = request.getJSON().proposalId;
 			let userId = user.getName();
 			let updated = update.execute(voteSql, [proposalId, userId]);
+			let isSuccessfullyVoted = updated !== null;
 			let vote = {
-				'status': updated !== null ? 'successfully voted' : 'already voted'
+				'status': isSuccessfullyVoted ? 200 : 400,
+				'message': isSuccessfullyVoted ? 'successfully voted' : 'already voted'
 			};
 			response.println(JSON.stringify(vote));
+			response.setStatus(vote.status);
 		})
 .execute();
