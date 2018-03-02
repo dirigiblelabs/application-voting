@@ -9,7 +9,7 @@ var voteSql = 'insert into VOTES values (?, ?)';
 
 rs.service()
 	.resource('')
-		.get(function(ctx, request, response) {
+		.post(function(ctx, request, response) {
 			let result = query.execute(checkVoteSql, [user.getName()]);
 			let isVoted = result.length !== 0;
 			let vote = {
@@ -19,7 +19,7 @@ rs.service()
 			response.println(JSON.stringify(vote));
 			response.setStatus(vote.status);
 		})
-		.post(function(ctx, request, response) {
+		.get(function(ctx, request, response) {
 			let proposalId = request.getJSON().proposalId;
 			let userId = user.getName();
 			let updated = update.execute(voteSql, [proposalId, userId]);
