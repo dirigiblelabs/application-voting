@@ -110,35 +110,6 @@
 					$scope.proposals = data;
 				});
 			}
-
-
-//			$http.get(voteApi)
-//			.success(function(data) {
-//				$scope.votingEnabled = true;
-//			}).error(function(data) {
-//				$scope.votingEnabled = false;
-//			});
-//
-//			$http.get(proposalsApi)
-//			.success(function(data) {
-//				$scope.proposals = data;
-//			});
-//
-//			$scope.confirmVote = function(proposal) {
-//				$scope.selectedProposal = proposal;
-//			};
-//
-//			$scope.vote = function() {
-//				var vote = {
-//					'proposalId': $scope.selectedProposal.PROPOSAL_ID
-//				};
-//				$http.post(voteApi, vote)
-//				.success(function(data) {
-//					$('#confirmVoteModal').modal('toggle');
-//					$scope.alreadyVotedMessage = 'You\'ve voted successfully for ' + $scope.selectedProposal.PROPOSAL_NAME + '!';
-//					$scope.votingEnabled = false;
-//				});
-//			};
   	  });
     </script>
 </body>
