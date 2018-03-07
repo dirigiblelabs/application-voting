@@ -1,11 +1,14 @@
 var rs = require('http/v3/rs');
 var query = require('db/v3/query');
+var update = require('db/v3/update');
 
 var getProposalsSql = 'select PROPOSAL_NAME, PROPOSAL_IMAGE from PROPOSALS';
 
 var getResultsSql = 'select PROPOSAL_NAME, count(*) as VOTES from PROPOSALS'
 	+ ' join VOTES on VOTE_PROPOSAL_ID = PROPOSAL_ID'
 	+ ' group by (PROPOSAL_NAME) order by VOTES';
+
+var deleteResultsSql = 'delete from VOTES';
 
 rs.service()
 	.resource('')
@@ -27,5 +30,10 @@ rs.service()
 				return b.VOTES - a.VOTES;
 			});
 			response.println(JSON.stringify(votingResults));
+		})
+		.delete(function(ctx, request, response) {
+			update.execute(deleteResultsSql);
+			response.println('');
+			response.status(200);
 		})
 .execute();

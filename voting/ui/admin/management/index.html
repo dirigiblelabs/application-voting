@@ -16,51 +16,51 @@
 </head>
 <body ng-controller="PageController">
 	<nav class="navbar sticky-top navbar-expand-lg navbar-dark primary-color">
-		<a class="navbar-brand text-center" href="#">{{contest}} Proposals</a>
+		<a class="navbar-brand text-center" href="#">Management</a>
 	</nav>
 
-	<div class="jumbotron list-group list-group-flush text-center" style="margin-left: 20%; margin-right: 20%;">
-		<a ng-repeat="next in proposals" href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-			<div class="d-flex w-100 justify-content-between">
-				<h5 class="mb-1">{{$index + 1}}.</h5>
-				<button type="button" class="btn btn-sm btn-danger waves-effect waves-light" ng-click="deleteProposal(next.PROPOSAL_ID)"><i class="fa fa-times-circle-o"></i></button>
-			</div>
-			<div class="row">
-				<img class="mx-auto d-block" src="{{next.PROPOSAL_IMAGE}}">
-				<h1 class="mx-auto d-block align-self-center">{{next.PROPOSAL_NAME}}</h1>
-			</div>
-  		</a>
-  		<div class="d-flex w-100 justify-content-between">
-  			<h5 class="mb-1"></h5>
-  			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalProposalForm">New Proposal</button>
-		</div>
+	<div class="jumbotron" style="margin-left: 20%; margin-right: 20%;">
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalSetContestForm">Set Contest</button>
+	  	<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalConfirmResetResultsForm">Reset Results</button>
   	</div>
 
 
-	<div class="modal fade" id="modalProposalForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="modalSetContestForm" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog cascading-modal" role="document">
 			<div class="modal-content">
 				<div class="modal-header primary-color white-text">
-					<h4 class="title">Proposal</h4>
+					<h4 class="title">Set Contest</h4>
 					<button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
             	</div>
-            	<div class="modal-body">
+				<div class="modal-body">
             		<div class="md-form form-sm">
             			<i class="fa fa-user prefix"></i>
-            			<input type="text" class="form-control form-control-sm" ng-model="newProposal.name">
-            			<label>Name</label>
+            			<input type="text" class="form-control form-control-sm" ng-model="contest">
+            			<label>Contest</label>
                 	</div>
 
-	                <div class="md-form form-sm">
-	                    <i class="fa fa-image prefix"></i>
-	                    <input type="text"class="form-control form-control-sm" ng-model="newProposal.image">
-	                    <label>Image</label>
-	                </div>
-	
 	                <div class="text-center mt-4 mb-2">
-	                    <button class="btn btn-primary" ng-click="addProposal()" data-dismiss="modal">Add</button>
+	                    <button class="btn btn-primary" ng-click="setContest()" data-dismiss="modal">Set</button>
 	                </div>
                	</div>
+		</div>
+	</div>
+	</div>
+
+	<div class="modal fade" id="modalConfirmResetResultsForm" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog cascading-modal" role="document">
+			<div class="modal-content">
+				<div class="modal-header primary-color white-text">
+					<h4 class="title">Reset Results</h4>
+					<button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            	</div>
+	            <div class="modal-body">
+					Do you really want to reset the results of <b>{{contest}}</b> voting?
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="resetResults()">Yes</button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -77,44 +77,24 @@
 		angular.module('page').controller('PageController', function ($scope, $http) {
 
 			var contestApi = '../../../../../js/voting/api/admin/contest.js';
-			var proposalsApi = '../../../../../js/voting/api/admin/proposals.js';
-
-			$scope.newProposal = {};
+			var resultsApi = '../../../../../js/voting/api/admin/results.js';
 
 			$http.get(contestApi)
 			.success(function(data) {
 				$scope.contest = data.name;
 			});
 
-			getProposals();
-
-			$scope.addProposal = function() {
-				var proposal = {
-					'name': $scope.newProposal.name,
-					'image': $scope.newProposal.image
+			$scope.setContest = function() {
+				var entity = {
+					'name': $scope.contest
 				};
-				$http.post(proposalsApi, proposal)
-				.success(function(data) {
-					$scope.newProposal = {};
-					getProposals();
-				}).error(function(data) {
-					alert(JSON.stringify(data));
-				});
+				$http.post(contestApi, JSON.stringify(entity));
 			};
 
-			$scope.deleteProposal = function(proposalId) {
-				$http.delete(proposalsApi + '/' + proposalId)
-				.success(function(data) {
-					getProposals();
-				})
+			$scope.resetResults = function() {
+				$http.delete(resultsApi);
 			};
 
-			function getProposals() {
-				$http.get(proposalsApi)
-				.success(function(data) {
-					$scope.proposals = data;
-				});
-			}
   	  });
     </script>
 </body>
