@@ -34,6 +34,6 @@ rs.service()
 		.delete(function(ctx, request, response) {
 			update.execute(deleteResultsSql);
 			response.println('');
-			response.status(200);
+			response.setStatus(200);
 		})
 .execute();
