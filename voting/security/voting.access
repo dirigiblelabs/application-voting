@@ -1,0 +1,1 @@
+{"constraints":[{"path":"/voting/ui/admin/","method":"*","roles":["Admin"],"scope":"HTTP"},{"method":"*","scope":"HTTP","path":"/voting/api/admin/","roles":["Admin"]}]}
