@@ -1,6 +1,6 @@
-var rs = require('http/v3/rs');
-var query = require('db/v3/query');
-var update = require('db/v3/update');
+var rs = require('http/v4/rs');
+var query = require('db/v4/query');
+var update = require('db/v4/update');
 
 var getProposalsSql = 'select PROPOSAL_NAME, PROPOSAL_IMAGE from PROPOSALS';
 

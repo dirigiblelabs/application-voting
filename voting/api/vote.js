@@ -1,7 +1,7 @@
-var rs = require('http/v3/rs');
-var query = require('db/v3/query');
-var update = require('db/v3/update');
-var user = require('security/v3/user');
+var rs = require('http/v4/rs');
+var query = require('db/v4/query');
+var update = require('db/v4/update');
+var user = require('security/v4/user');
 
 var checkVoteSql = 'select * from VOTES where VOTE_USER_ID = ?';
 
@@ -16,8 +16,8 @@ rs.service()
 				'status': !isVoted ? 200 : 400,
 				'message': !isVoted ? 'not voted': 'already voted'
 			};
-			response.println(JSON.stringify(vote));
 			response.setStatus(vote.status);
+			response.println(JSON.stringify(vote));
 		})
 		.post(function(ctx, request, response) {
 			let proposalId = request.getJSON().proposalId;

@@ -1,7 +1,7 @@
-var rs = require('http/v3/rs');
-var query = require('db/v3/query');
-var update = require('db/v3/update');
-var sequence = require('db/v3/sequence');
+var rs = require('http/v4/rs');
+var query = require('db/v4/query');
+var update = require('db/v4/update');
+var sequence = require('db/v4/sequence');
 
 var getProposalsSql = 'select * from PROPOSALS';
 var createPrpopsalSql = 'insert into PROPOSALS (PROPOSAL_ID, PROPOSAL_NAME, PROPOSAL_IMAGE) values (?, ?, ?)';

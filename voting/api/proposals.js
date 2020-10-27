@@ -1,5 +1,5 @@
-var rs = require('http/v3/rs');
-var query = require('db/v3/query');
+var rs = require('http/v4/rs');
+var query = require('db/v4/query');
 
 var getProposalsSql = 'select * from PROPOSALS';
 
