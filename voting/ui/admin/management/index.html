@@ -15,9 +15,11 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css" rel="stylesheet">
 </head>
 <body ng-controller="PageController">
-	<nav class="navbar sticky-top navbar-expand-lg navbar-dark primary-color">
-		<a class="navbar-brand text-center" href="#">Management</a>
-	</nav>
+	<ui5-shellbar
+		primary-title="Voting Application"
+	>
+		<img slot="logo" src="./resources/logo.png"/>
+	</ui5-shellbar>
 
 	<div class="jumbotron" style="margin-left: 20%; margin-right: 20%;">
 		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalSetContestForm">Set Contest</button>
@@ -75,7 +77,6 @@
 	<script type="text/javascript">
 		angular.module('page', []);
 		angular.module('page').controller('PageController', function ($scope, $http) {
-
 			var contestApi = '../../../../../js/voting/api/admin/contest.js';
 			var resultsApi = '../../../../../js/voting/api/admin/results.js';
 
