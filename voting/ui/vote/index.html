@@ -113,7 +113,7 @@
 			background: #925ace;
 		}
 
-		.idea-8 {
+		.idea-9 {
 			background: #647987;
 		}
 
@@ -221,7 +221,7 @@
 	<section class="ideas" ng-show="votingEnabled">
 		<div ng-repeat="next in proposals track by $index" class="idea-wrapper">
 			<div>
-				<span class="idea-{{$index % proposals.length}}"></span>
+				<span class="idea-{{$index % 10}}"></span>
 				<div class="idea-content">
 					<ui5-title wrap level="">{{next.PROPOSAL_NAME}}</ui5-title>
 					<ui5-label wrap>{{next.PROPOSAL_IMAGE}}</ui5-label>
