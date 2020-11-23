@@ -22,7 +22,16 @@ rs.service()
 		.post(function(ctx, request, response) {
 			let proposalId = request.getJSON().proposalId;
 			let userId = user.getName();
-			let updated = update.execute(voteSql, [proposalId, userId]);
+			let updated = update.execute(voteSql, [
+				{
+					type: "INTEGER",
+					value: proposalId
+				},
+				{
+					type: "VARCHAR",
+					value: userId
+				}
+			]);
 			let isSuccessfullyVoted = updated !== null;
 			let vote = {
 				'status': isSuccessfullyVoted ? 200 : 400,
