@@ -3,9 +3,9 @@ var query = require('db/v4/query');
 var update = require('db/v4/update');
 var user = require('security/v4/user');
 
-var checkVoteSql = 'select * from VOTES where VOTE_USER_ID = ?';
+var checkVoteSql = 'select * from \"VOTES\" where \"VOTE_USER_ID\" = ?';
 
-var voteSql = 'insert into VOTES values (?, ?)';
+var voteSql = 'insert into \"VOTES\" values (?, ?)';
 
 rs.service()
 	.resource('')

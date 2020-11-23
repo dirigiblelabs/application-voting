@@ -1,7 +1,7 @@
 var rs = require('http/v4/rs');
 var query = require('db/v4/query');
 
-var getProposalsSql = 'select * from PROPOSALS';
+var getProposalsSql = 'select * from \"PROPOSALS\"';
 
 rs.service()
 	.resource('')

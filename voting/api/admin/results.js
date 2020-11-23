@@ -2,13 +2,13 @@ var rs = require('http/v4/rs');
 var query = require('db/v4/query');
 var update = require('db/v4/update');
 
-var getProposalsSql = 'select PROPOSAL_NAME, PROPOSAL_IMAGE from PROPOSALS';
+var getProposalsSql = 'select \"PROPOSAL_NAME\", \"PROPOSAL_IMAGE\" from \"PROPOSALS\"';
 
-var getResultsSql = 'select PROPOSAL_NAME, count(*) as VOTES from PROPOSALS'
-	+ ' join VOTES on VOTE_PROPOSAL_ID = PROPOSAL_ID'
-	+ ' group by (PROPOSAL_NAME) order by VOTES';
+var getResultsSql = 'select \"PROPOSAL_NAME\", count(*) as \"VOTES\" from \"PROPOSALS\"'
+	+ ' join \"VOTES\" on \"VOTE_PROPOSAL_ID\" = \"PROPOSAL_ID\"'
+	+ ' group by (\"PROPOSAL_NAME\") order by \"VOTES\"';
 
-var deleteResultsSql = 'delete from VOTES';
+var deleteResultsSql = 'delete from \"VOTES\"';
 
 rs.service()
 	.resource('')
