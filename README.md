@@ -29,6 +29,67 @@ cf push voting \
 -m 2G -k 2GB
 ```
 
+XSUAA Configuration
+```json
+{
+   "xsappname": "xsuaa-voting",
+   "scopes": [
+      {
+         "name": "$XSAPPNAME.Developer",
+         "description": "Developer scope"
+      },
+      {
+         "name": "$XSAPPNAME.Operator",
+         "description": "Operator scope"
+      },
+      {
+         "name": "$XSAPPNAME.Admin",
+         "description": "Voting admin scope"
+      }
+   ],
+   "role-templates": [
+      {
+         "name": "Developer",
+         "description": "Developer related roles",
+         "scope-references": [
+            "$XSAPPNAME.Developer"
+         ]
+      },
+      {
+         "name": "Operator",
+         "description": "Operator related roles",
+         "scope-references": [
+            "$XSAPPNAME.Operator"
+         ]
+      },
+      {
+         "name": "Admin",
+         "description": "Voting related roles",
+         "scope-references": [
+            "$XSAPPNAME.Admin"
+         ]
+      }
+   ],
+   "role-collections": [
+      {
+         "name": "dirigible",
+         "description": "Dirigible Developer",
+         "role-template-references": [ 
+            "$XSAPPNAME.Developer",
+            "$XSAPPNAME.Operator"
+         ]
+      },
+      {
+         "name": "voting-admin",
+         "description": "Voting Admin",
+         "role-template-references": [ 
+            "$XSAPPNAME.Admin"
+         ]
+      }
+   ]	
+}
+```
+
 ## License
 
 This project is copyrighted by [SAP SE](http://www.sap.com/) and is available under the [Eclipse Public License v 1.0](https://www.eclipse.org/legal/epl-v10.html). See [LICENSE](LICENSE) and [NOTICE.txt](NOTICE.txt) for further details.
