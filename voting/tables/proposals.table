@@ -1,25 +1,25 @@
 {
-	'name': 'PROPOSALS',
-	'type': 'TABLE',
-	'columns': [{
-		'name': 'PROPOSAL_ID',
-		'type': 'INTEGER'
+	"name": "PROPOSALS",
+	"type": "TABLE",
+	"columns": [{
+		"name": "PROPOSAL_ID",
+		"type": "INTEGER"
 	}, {
-		'name': 'PROPOSAL_NAME',
-		'type': 'VARCHAR',
-		'length': 50
+		"name": "PROPOSAL_NAME",
+		"type": "VARCHAR",
+		"length": 50
 	}, {
-		'name': 'PROPOSAL_IMAGE',
-		'type': 'VARCHAR',
-		'length': 256,
-		'nullable': 'true'
+		"name": "PROPOSAL_IMAGE",
+		"type": "VARCHAR",
+		"length": 256,
+		"nullable": "true"
 	}],
-	'constraints': {
-		'primaryKey': {
-			'columns': ['PROPOSAL_ID']
+	"constraints": {
+		"primaryKey": {
+			"columns": ["PROPOSAL_ID"]
 		},
-		'uniqueIndices':[{
-			'columns': ['PROPOSAL_NAME']
+		"uniqueIndices":[{
+			"columns": ["PROPOSAL_NAME"]
 		}]
 	}
 }
