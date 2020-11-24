@@ -1,5 +1,4 @@
-#FROM dirigiblelabs/dirigible-sap-kyma:latest
-FROM dirigiblelabs/dirigible-sap-cf:5.6.0-preview
+FROM dirigiblelabs/dirigible-sap-kyma:latest
 
 RUN mkdir -p $CATALINA_HOME/target/dirigible/repository/root/registry/public/
 COPY voting/ $CATALINA_HOME/target/dirigible/repository/root/registry/public/voting/
