@@ -5,4 +5,3 @@ COPY voting/ $CATALINA_HOME/target/dirigible/repository/root/registry/public/vot
 
 ENV DIRIGIBLE_THEME_DEFAULT=fiori
 ENV DIRIGIBLE_HOME_URL=/services/v4/web/voting/ui/vote/
-ENV DIRIGIBLE_DATABASE_NAMES_CASE_SENSITIVE=true
